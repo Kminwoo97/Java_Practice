@@ -10,6 +10,7 @@ public class Main {
         System.out.println("== 명언앱 -- ");
 
 
+        long number = 1L;
         String op;
         String title;
         String author;
@@ -27,6 +28,8 @@ public class Main {
                 System.out.print("작가 : ");
                 st = new StringTokenizer(br.readLine());
                 author = st.nextToken();
+                System.out.println(number+"번 명연이 등록되었습니다.");
+                number++;
             }
         }
     }
