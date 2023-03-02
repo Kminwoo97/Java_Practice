@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class App {
@@ -8,13 +6,42 @@ public class App {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("== 명언앱 -- ");
 
-
         long number = 0L;
         String op;
         String title;
         String author;
         Map<Long, WiseSaying> map = new LinkedHashMap<>();
-//        List<WiseSaying> list = new ArrayList<>();
+
+        //파일 있으면 불러와서 HashMap에 넣는다.
+        File f = new File("/Users/mwkim/Desktop/LikeLion/test.txt");
+        if (!f.exists()){
+            try{
+                f.createNewFile();
+                System.out.println("파일이 생성되었습니다.");
+            }catch (IOException e){
+                System.out.println(e);
+            }
+        }else {
+            try {
+                FileReader fr = new FileReader(f);
+                BufferedReader fileReader = new BufferedReader(fr);
+                String line = null;
+                while ((line = fileReader.readLine()) != null) {
+                    line.trim();
+                    String[] split = line.split("/");
+                    Long f_num = Long.parseLong(split[0].trim());
+                    String f_title = split[0].trim();
+                    String f_author = split[1].trim();
+                    map.put(f_num, new WiseSaying(f_num, f_title,f_author));
+                    number = f_num;
+                }
+            }catch (IOException e){
+                System.out.println(e);
+            }finally {
+                number++;
+            }
+        }
+
         while(true){
             System.out.print("명령 ) ");
             op = br.readLine().trim();
@@ -29,9 +56,10 @@ public class App {
                 System.out.println(++number+"번 명연이 등록되었습니다.");
                 map.put(number, new WiseSaying(number, title, author));
             } else if (op.equals("목록")) {
+                System.out.println("===================");
                 System.out.println("번호 / 작가 / 명언");
                 List<Long> keyAll = new ArrayList<>(map.keySet());
-                Collections.reverse(keyAll);
+                Collections.sort(keyAll, Collections.reverseOrder());
                 for (Long key : keyAll) {
                     System.out.println(map.get(key));
                 }
@@ -58,6 +86,20 @@ public class App {
                 map.put(cur.getNumber(), new WiseSaying(cur.getNumber(), title, author));
             }
         }
+
+        //HashMap에 있는 것들을 파일에 저장(정확히는 덮어쓰기 했다.)
+        try{
+            FileWriter fw = new FileWriter(f, false);
+            List<Long> keyAll = new ArrayList<>(map.keySet());
+            for (Long key : keyAll) {
+                fw.write(map.get(key).toString());
+                fw.write("\r\n");
+            }
+            fw.close();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
     }
 
     public boolean isExist(Map<Long,WiseSaying> map, Long num){
@@ -77,7 +119,7 @@ class WiseSaying{
 
     @Override
     public String toString() {
-        return number + " / " + title + " / " +  author;
+        return number + " / " + author + " / " +  title;
     }
 
     public Long getNumber() {
