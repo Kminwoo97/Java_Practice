@@ -44,8 +44,24 @@ public class App {
                 }else{
                     System.out.println(removeNum+"번 명연은 존재하지 않습니다.");
                 }
+            } else if (op.contains("수정?id=")) {
+                String[] split = op.split("=");
+                Long editNum = Long.parseLong(split[1]);
+                WiseSaying cur = map.get(editNum);
+                System.out.println("명연(기존) : " + cur.getTitle());
+                System.out.print("명언 : ");
+                title = br.readLine();
+                System.out.println("작가(기존) : " + cur.getAuthor());
+                System.out.print("작가 : ");
+                author = br.readLine();
+
+                map.put(cur.getNumber(), new WiseSaying(cur.getNumber(), title, author));
             }
         }
+    }
+
+    public boolean isExist(Map<Long,WiseSaying> map, Long num){
+        return false;
     }
 }
 class WiseSaying{
@@ -62,5 +78,17 @@ class WiseSaying{
     @Override
     public String toString() {
         return number + " / " + title + " / " +  author;
+    }
+
+    public Long getNumber() {
+        return number;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }
