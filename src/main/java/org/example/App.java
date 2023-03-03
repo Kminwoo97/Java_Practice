@@ -1,7 +1,7 @@
 package org.example;
 
-import system.controller.SystemController;
-import wiseSaying.controller.WiseSayingController;
+import org.example.system.controller.SystemController;
+import org.example.wiseSaying.controller.WiseSayingController;
 
 import java.io.*;
 

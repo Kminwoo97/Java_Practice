@@ -1,4 +1,4 @@
-package wiseSaying.controller;
+package org.example.wiseSaying.entity;
 
 public class WiseSaying {
     private Long number;

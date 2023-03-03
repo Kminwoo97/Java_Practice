@@ -1,6 +1,7 @@
-package wiseSaying.controller;
+package org.example.wiseSaying.controller;
 
 import org.example.RequestCommand;
+import org.example.wiseSaying.entity.WiseSaying;
 
 import java.io.BufferedReader;
 import java.io.IOException;
